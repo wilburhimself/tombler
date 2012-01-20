@@ -3,7 +3,7 @@
 	$url = 'micro.retrorock.info';
 	$key = 'VlqgtOFkFKeOdGFPAqiSUaOTcAO2DHWKRDbf6JbeDLEvOJfdYZ';
 	$humblr = new Humblr($url, $key);
-	$posts = $humblr->getPosts(array ('type' => 'photo'));
+	$posts = $humblr->getPosts(array ('type' => 'photo', 'limit' => 50));
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,17 +16,15 @@
 
 <body>
 	<div id="header"><h1><a href="/tombler/">Tombler</a></h1></div>
-	<?php if (empty($_GET) and empty($_GET['id'])): ?>
         <ul id="photoblog">
-			<?php foreach ($posts as $post):  ?>
-                <li class="item"><a href="<?php print $post->photos[0]->original_size->url ?>" class="group1" title=""><img src="<?php print $post->photos[0]->alt_sizes[2]->url ?>" alt="" /></a></li>
+	    <?php foreach ($posts as $post): print_r($post); ?>
+                <li class="item">
+			<a href="<?php print $post->photos[0]->original_size->url ?>" class="group1" title="">
+				<img src="<?php print $post->photos[0]->alt_sizes[count($post->photos[0]->alt_sizes) - 1]->url ?>" alt="" />
+			</a>
+		</li>
             <?php endforeach; ?>
-            
         </ul>
-	<li>Sigue viendo fotos y m&aacute;s en <a href="http://micro.retrorock.info/">micro.retrorock.info</a></li>
-    <?php else: ?>
-		<?php foreach ($posts as $post): include 'templates/'.$post['type'].'.php'; endforeach; ?>
-    <?php endif; ?>
     
     <div id="footer">Este es un ejemplo de como usar el api de tumblr para leer los posts de tu blog. En este caso estoy leyendo solo las fotos en <a href="http://micro.retrorock.info/">mi blog en Tumblr</a>.
 <p>Hay m&aacute;s informaci&oacute;n de como funciona <a href="http://retrorock.info/2010/06/jugando-con-el-api-de-tumblr/">aqu&iacute;</a></p></div>
